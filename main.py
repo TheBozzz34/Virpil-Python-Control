@@ -3,17 +3,18 @@ from time import sleep
 from djitellopy import Tello
 import tkinter as tk
 
+# Joystick Initilization Code
 pygame.init()
 pygame.joystick.init()
 joystick = pygame.joystick.Joystick(0)
 joystick.init()
 
+# Tello Initilization Code
 tello = Tello()
-
-
 tello.connect()
 
 
+# GUI Code (Not Working)
 root = tk.Tk()
 root.title("Tello Virpil Control")
 
@@ -22,9 +23,8 @@ x_label.pack()
 y_label = tk.Label(root, text="Y Axis:")
 y_label.pack()
 
-# tello.takeoff()
 
-
+# Send RC Control to Tello, no response needed
 def map_joystick_to_tello(x, y):
     speed = int(-x * 100)
     turn = int(y * 100)
@@ -52,6 +52,7 @@ try:
 
         map_joystick_to_tello(x_axis, y_axis)
 
+        # Individual Button Mapping
         if (joystick.get_button(3) == 1):
             tello.land()
         if (joystick.get_button(9) == 1 ):
@@ -60,12 +61,6 @@ try:
             tello.move_up(30)
         if (joystick.get_button(18) == 1):
             tello.move_down(30)
-        
-
-
-
-        # tello.send_rc_control(0, x_axis * 100, 0, y_axis * 100) 
-        
 
         sleep(0.05)
 
