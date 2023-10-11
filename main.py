@@ -22,9 +22,11 @@ x_label.pack()
 y_label = tk.Label(root, text="Y Axis:")
 y_label.pack()
 
+# tello.takeoff()
+
 
 def map_joystick_to_tello(x, y):
-    speed = int(x * 100)
+    speed = int(-x * 100)
     turn = int(y * 100)
     
 
@@ -40,8 +42,8 @@ try:
         pygame.event.pump()
         
         # Flip cause virpil joystick is funky
-        x_axis = joystick.get_axis(1)
-        y_axis = joystick.get_axis(0)
+        x_axis = joystick.get_axis(0)
+        y_axis = joystick.get_axis(1)
         
 
         x_label.config(text=f"X Axis: {x_axis:.2f}")
@@ -49,6 +51,20 @@ try:
         
 
         map_joystick_to_tello(x_axis, y_axis)
+
+        if (joystick.get_button(3) == 1):
+            tello.land()
+        if (joystick.get_button(9) == 1 ):
+            tello.takeoff()
+        if (joystick.get_button(17) == 1):
+            tello.move_up(30)
+        if (joystick.get_button(18) == 1):
+            tello.move_down(30)
+        
+
+
+
+        # tello.send_rc_control(0, x_axis * 100, 0, y_axis * 100) 
         
 
         sleep(0.05)
